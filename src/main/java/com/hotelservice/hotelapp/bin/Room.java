@@ -32,11 +32,5 @@ public class Room {
 
 
 
-    public Room(int howManyPersons, boolean toiletIncluded, boolean isAvailable, boolean isClean, Hotel hotel) {
-        this.howManyPersons = howManyPersons;
-        this.toiletIncluded = toiletIncluded;
-        this.isAvailable = isAvailable;
-        this.isClean = isClean;
-        this.hotel = hotel;
-    }
+
 }
