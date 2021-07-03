@@ -19,12 +19,17 @@ public class RoomService {
     public RoomService(RoomRepo roomRepo) {
         this.roomRepo = roomRepo;
     }
+    public void addRoomToRepo(Room room){
+        roomRepo.save(room);
+    }
+
 
     public List<Room> getAllRooms(){
         return roomRepo.findAll();
     }
+
     public Room getById(Integer id){
-        return roomRepo.findRoomById(id).get();
+        return roomRepo.findRoomById(id).orElseThrow(RuntimeException::new);
     }
 
 }

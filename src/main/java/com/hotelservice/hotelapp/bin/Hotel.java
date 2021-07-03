@@ -8,6 +8,7 @@ import java.util.List;
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hotel_id")
     private Integer id;
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;

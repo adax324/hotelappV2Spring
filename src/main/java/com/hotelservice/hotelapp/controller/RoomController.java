@@ -5,10 +5,7 @@ import com.hotelservice.hotelapp.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,11 +17,18 @@ public class RoomController {
     public RoomController(RoomService roomService) {
         this.roomService = roomService;
     }
+    @PostMapping("/add")
+    public ResponseEntity<Room> addRoom(@RequestBody Room room){
+        roomService.addRoomToRepo(room);
+        return new ResponseEntity<>(room, HttpStatus.CREATED);
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<Room>> getAll(){
 
     return new ResponseEntity<>(roomService.getAllRooms(), HttpStatus.OK);
     }
+
     @GetMapping("get/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id){
     return new ResponseEntity<>(roomService.getById(id),HttpStatus.OK);
