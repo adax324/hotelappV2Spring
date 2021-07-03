@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Entity
@@ -15,10 +18,11 @@ public class Room {
     private int howManyPersons;
     private boolean toiletIncluded;
     private boolean isAvailable;
-   // private List<Guest> guests;
+   @OneToMany(mappedBy = "room")
+    private List<Guest> guests;
     private boolean isClean;
-   // private LocalDate dateOfRegister;
-   // private LocalDate dateOfUnregister;
+    private LocalDate dateOfRegister;
+   private LocalDate dateOfUnregister;
     @ManyToOne
     @JoinColumn(name = "rooms")
     private Hotel hotel;
