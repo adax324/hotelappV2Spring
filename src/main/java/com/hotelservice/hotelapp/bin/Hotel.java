@@ -1,8 +1,14 @@
 package com.hotelservice.hotelapp.bin;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
-
+@Getter
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "hotel")
 public class Hotel {
@@ -13,7 +19,5 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms;
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
+
 }

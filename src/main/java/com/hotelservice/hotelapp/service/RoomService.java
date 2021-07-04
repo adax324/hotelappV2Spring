@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,9 +31,19 @@ public class RoomService {
     public List<Room> getAllRooms(){
         return roomRepo.findAll();
     }
-
+    public List<Room> getAllAvailableRooms(){
+        List<Room> rooms=roomRepo.findAll();
+        List<Room> availableRooms=new ArrayList<>();
+        for (Room room : rooms) {
+            if (room.isAvailable()){
+                availableRooms.add(room);
+            }
+        }
+        return availableRooms;
+    }
     public Room getById(Integer id){
         return roomRepo.findRoomById(id).orElseThrow(RuntimeException::new);
     }
+
 
 }
