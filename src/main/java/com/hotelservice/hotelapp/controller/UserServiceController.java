@@ -1,13 +1,12 @@
 package com.hotelservice.hotelapp.controller;
 
+import com.hotelservice.hotelapp.bin.Guest;
 import com.hotelservice.hotelapp.bin.Room;
 import com.hotelservice.hotelapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +21,15 @@ public class UserServiceController {
     @GetMapping("/getAvailableRooms")
     public ResponseEntity<List<Room>> getAllRooms(){
         return new ResponseEntity<>(userService.getAvailableRooms(), HttpStatus.OK);
+    }
+    @PutMapping("/registerroom/{id}")
+    public ResponseEntity<Room> registeruser(@PathVariable(name = "id") Integer id, @RequestBody List<Guest> guests){
+        userService.registerNewUserToRoom(id,guests);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("/unregisterroom/{id}")
+    public ResponseEntity<?> unregisterUser(@PathVariable(name = "id") Integer id){
+        userService.unregisterUserFromRoom(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

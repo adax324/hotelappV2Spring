@@ -20,7 +20,7 @@ public class Guest {
     private String lastName;
     private LocalDate birthDay;
     @ManyToOne
-    @JoinColumn(name = "guests")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     public Guest(String firstName, String lastName, LocalDate birthDay) {

@@ -1,5 +1,6 @@
 package com.hotelservice.hotelapp.service;
 
+import com.hotelservice.hotelapp.bin.Guest;
 import com.hotelservice.hotelapp.bin.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,5 +22,10 @@ public class UserService {
     public List<Room> getAvailableRooms(){
         return roomService.getAllAvailableRooms();
     }
-
+    public void registerNewUserToRoom(Integer id, List<Guest> guests){
+        roomService.registerNewRoom(id,guests);
+    }
+    public void unregisterUserFromRoom(Integer id){
+        roomService.unregisterRoom(id);
+    }
 }

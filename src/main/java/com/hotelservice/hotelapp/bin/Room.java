@@ -16,6 +16,7 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     private Integer id;
     @Column(name = "HMP")
     private int howManyPersons;
