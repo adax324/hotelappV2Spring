@@ -1,7 +1,7 @@
-package com.hotelservice.hotelapp.service;
+package com.hotelservice.hotelapp.module.service.guest;
 
-import com.hotelservice.hotelapp.bin.Guest;
-import com.hotelservice.hotelapp.repo.GuestRepo;
+import com.hotelservice.hotelapp.module.entity.guest.Guest;
+import com.hotelservice.hotelapp.module.repository.guest.GuestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
-package com.hotelservice.hotelapp.bin;
+package com.hotelservice.hotelapp.module.entity.hotel;
 
+import com.hotelservice.hotelapp.module.entity.room.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,13 +12,16 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "hotel")
-public class Hotel {
+
+public class HotelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hotel_id")
     private Integer id;
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotelEntity")
     private List<Room> rooms;
+    @Column(unique = true)
+    private String uuid;
 
 
 }

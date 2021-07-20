@@ -1,6 +1,6 @@
-package com.hotelservice.hotelapp.repo;
+package com.hotelservice.hotelapp.module.repository.guest;
 
-import com.hotelservice.hotelapp.bin.Guest;
+import com.hotelservice.hotelapp.module.entity.guest.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

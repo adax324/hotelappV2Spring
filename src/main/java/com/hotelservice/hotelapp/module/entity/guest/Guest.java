@@ -1,17 +1,19 @@
-package com.hotelservice.hotelapp.bin;
+package com.hotelservice.hotelapp.module.entity.guest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hotelservice.hotelapp.module.entity.room.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
 
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
+@JsonIgnoreProperties("roomy")
 public class Guest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Guest {
     private LocalDate birthDay;
     @ManyToOne
     @JoinColumn(name = "room_id")
-    private Room room;
+    private Room roomy;
 
     public Guest(String firstName, String lastName, LocalDate birthDay) {
         this.firstName = firstName;

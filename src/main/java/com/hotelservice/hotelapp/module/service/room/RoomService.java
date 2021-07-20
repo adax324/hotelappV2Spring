@@ -1,15 +1,14 @@
-package com.hotelservice.hotelapp.service;
+package com.hotelservice.hotelapp.module.service.room;
 
-import com.hotelservice.hotelapp.bin.Guest;
-import com.hotelservice.hotelapp.bin.Room;
-import com.hotelservice.hotelapp.repo.RoomRepo;
+import com.hotelservice.hotelapp.module.entity.guest.Guest;
+import com.hotelservice.hotelapp.module.entity.hotel.HotelEntity;
+import com.hotelservice.hotelapp.module.entity.room.Room;
+import com.hotelservice.hotelapp.module.repository.hotel.HotelRepo;
+import com.hotelservice.hotelapp.module.repository.room.RoomRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
@@ -20,14 +19,21 @@ import java.util.List;
 @Transactional
 public class RoomService {
     private RoomRepo roomRepo;
+    private HotelRepo hotelRepo;
 
 
     @Autowired
-    public RoomService(RoomRepo roomRepo) {
+    public RoomService(RoomRepo roomRepo, HotelRepo hotelRepo) {
         this.roomRepo = roomRepo;
+        this.hotelRepo = hotelRepo;
     }
-    public void addRoomToRepo(Room room){
-        roomRepo.save(room);
+    public Room addRoomToRepo(Room room){
+        HotelEntity hotelEntity=hotelRepo.getHotelEntityByUuid(room.getHotel_uuid()).orElse(null);
+        if (hotelEntity!=null){
+            room.setHotelEntity(hotelEntity);
+            roomRepo.save(room);
+        }
+        return room;
     }
 
 
@@ -74,6 +80,18 @@ public class RoomService {
         roomRepo.save(room);
 
     }
+    public Room updateRoom(Integer id, Room updatedRoom) {
+        Room room=roomRepo.findRoomById(id).orElse(null);
+        if (room!=null){
+            return roomRepo.saveAndFlush(room.updateRoom(updatedRoom));
+        } else throw new EmptyResultDataAccessException(1);
+    }
+
+
+    public void deleteById(Integer id) {
+        roomRepo.deleteById(id);
+    }
+
 
 
 }

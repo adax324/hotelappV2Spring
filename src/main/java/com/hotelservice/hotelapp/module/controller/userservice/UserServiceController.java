@@ -1,8 +1,8 @@
-package com.hotelservice.hotelapp.controller;
+package com.hotelservice.hotelapp.module.controller.userservice;
 
-import com.hotelservice.hotelapp.bin.Guest;
-import com.hotelservice.hotelapp.bin.Room;
-import com.hotelservice.hotelapp.service.UserService;
+import com.hotelservice.hotelapp.module.entity.guest.Guest;
+import com.hotelservice.hotelapp.module.entity.room.Room;
+import com.hotelservice.hotelapp.module.service.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
