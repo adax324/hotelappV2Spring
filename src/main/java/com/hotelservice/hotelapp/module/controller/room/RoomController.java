@@ -26,11 +26,16 @@ public class RoomController {
         return new ResponseEntity<>(roomService.addRoomToRepo(room), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Room>> getAll() {
-
-        return new ResponseEntity<>(roomService.getAllRooms(), HttpStatus.OK);
+    @GetMapping("/getAllRooms/{uuidhotel}")
+    public ResponseEntity<List<Room>> getAllRoomsByHotelUuid(@PathVariable("uuidhotel") String uuidHotel)
+    {List<Room> rooms=roomService.getAllRooms(uuidHotel);
+        return new ResponseEntity<>(rooms,HttpStatus.FOUND);
     }
+    @GetMapping("/getAvailableRooms/{hotelUuid}")
+    public ResponseEntity<List<Room>> getAllRooms(@PathVariable("hotelUuid") String hotelUuid){
+        return new ResponseEntity<>(roomService.getAllAvailableRooms(hotelUuid), HttpStatus.OK);
+    }
+
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {

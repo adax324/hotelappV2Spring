@@ -16,12 +16,7 @@ public class UserService {
         this.roomService = roomService;
     }
 
-    public List<Room> getAllRooms(){
-        return roomService.getAllRooms();
-    }
-    public List<Room> getAvailableRooms(){
-        return roomService.getAllAvailableRooms();
-    }
+
     public void registerNewUserToRoom(Integer id, List<Guest> guests){
         roomService.registerNewRoom(id,guests);
     }

@@ -2,6 +2,8 @@ package com.hotelservice.hotelapp.module.controller.userservice;
 
 import com.hotelservice.hotelapp.module.entity.guest.Guest;
 import com.hotelservice.hotelapp.module.entity.room.Room;
+import com.hotelservice.hotelapp.module.service.hotel.HotelService;
+import com.hotelservice.hotelapp.module.service.room.RoomService;
 import com.hotelservice.hotelapp.module.service.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,14 +16,13 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserServiceController {
     private UserService userService;
+
     @Autowired
     public UserServiceController(UserService userService) {
         this.userService = userService;
+
     }
-    @GetMapping("/getAvailableRooms")
-    public ResponseEntity<List<Room>> getAllRooms(){
-        return new ResponseEntity<>(userService.getAvailableRooms(), HttpStatus.OK);
-    }
+
     @PutMapping("/registerroom/{id}")
     public ResponseEntity<Room> registeruser(@PathVariable(name = "id") Integer id, @RequestBody List<Guest> guests){
         userService.registerNewUserToRoom(id,guests);

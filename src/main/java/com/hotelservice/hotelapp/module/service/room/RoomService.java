@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,9 +28,10 @@ public class RoomService {
         this.roomRepo = roomRepo;
         this.hotelRepo = hotelRepo;
     }
-    public Room addRoomToRepo(Room room){
-        HotelEntity hotelEntity=hotelRepo.getHotelEntityByUuid(room.getHotel_uuid()).orElse(null);
-        if (hotelEntity!=null){
+
+    public Room addRoomToRepo(Room room) {
+        HotelEntity hotelEntity = hotelRepo.getHotelEntityByUuid(room.getHotel_uuid()).orElse(null);
+        if (hotelEntity != null) {
             room.setHotelEntity(hotelEntity);
             roomRepo.save(room);
         }
@@ -37,52 +39,65 @@ public class RoomService {
     }
 
 
-    public List<Room> getAllRooms(){
-        return roomRepo.findAll();
+    public List<Room> getAllRooms(String uuid) {
+       List<Room> rooms=roomRepo.findAll();
+       rooms.stream()
+                .filter(room -> room.getHotel_uuid()!=null&&room.getHotel_uuid().equals(uuid))
+                .collect(Collectors.toList());
+       return rooms;
+
+
     }
-    public List<Room> getAllAvailableRooms(){
-        List<Room> rooms=roomRepo.findAll();
-        List<Room> availableRooms=new ArrayList<>();
+
+    public List<Room> getAllAvailableRooms(String hotelUuid) {
+        List<Room> rooms = roomRepo.findAll();
+        List<Room> availableRooms = new ArrayList<>();
         for (Room room : rooms) {
-            if (room.isAvailable()){
+            if (room.isAvailable() && room.getHotel_uuid().equals(hotelUuid)) {
                 availableRooms.add(room);
             }
         }
         return availableRooms;
     }
-    public Room getById(Integer id){
+
+    public Room getById(Integer id) {
         return roomRepo.findRoomById(id).orElseThrow(RuntimeException::new);
     }
-    public void registerNewRoom(Integer id, List<Guest> guests){
+
+    public void registerNewRoom(Integer id, List<Guest> guests) {
         for (Guest guest : guests) {
-            if (Period.between(guest.getBirthDay(), LocalDate.now()).getYears()<18){
+            if (Period.between(guest.getBirthDay(), LocalDate.now()).getYears() < 18) {
                 return;
             }
         }
 
-        Room room=roomRepo.getById(id);
+        Room room = roomRepo.getById(id);
         room.setGuests(guests);
         roomRepo.save(room);
         setRoomUnavailable(id);
 
     }
-    public void unregisterRoom(Integer id){
+
+    public void unregisterRoom(Integer id) {
         setRoomUnavailable(id);
     }
-    private void setRoomUnavailable(Integer id){
-        Room room=this.roomRepo.getById(id);
+
+    private void setRoomUnavailable(Integer id) {
+        Room room = this.roomRepo.getById(id);
         room.setAvailable(false);
         roomRepo.save(room);
     }
-    private void setRoomAvailable(Integer id){
-        Room room=roomRepo.getById(id);
+
+    private void setRoomAvailable(Integer id) {
+        Room room = roomRepo.getById(id);
         room.setAvailable(true);
         roomRepo.save(room);
 
     }
+
     public Room updateRoom(Integer id, Room updatedRoom) {
-        Room room=roomRepo.findRoomById(id).orElse(null);
-        if (room!=null){
+        Room room = roomRepo.findRoomById(id).orElse(null);
+        if (room != null) {
             return roomRepo.saveAndFlush(room.updateRoom(updatedRoom));
         } else throw new EmptyResultDataAccessException(1);
     }
@@ -91,7 +106,6 @@ public class RoomService {
     public void deleteById(Integer id) {
         roomRepo.deleteById(id);
     }
-
 
 
 }
